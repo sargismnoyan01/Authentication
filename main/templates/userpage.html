@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ this_user }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-container {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+        }
+        .profile-container h3 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #333;
+        }
+        .profile-container img {
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+        .status {
+            font-size: 18px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .status.is-verify {
+            color: green;
+        }
+        .status.not-verify {
+            color: red;
+        }
+        .verify-button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 10px 0;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .verify-button:hover {
+            background-color: #0056b3;
+        }
+        .phone {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        {% for i in userr %}
+            <h3>{{ i.username }}</h3>
+            <img src="{{ i.qr_code.url }}" alt="User QR Code" width="250" height="250">
+            {% if i.is_verify %}
+                <div class="status is-verify">User is verified</div>
+            {% else %}
+                <div class="status not-verify">User is not verified</div>
+                <a class="verify-button" href="{% url 'verify' i.username %}">Verify Now</a>
+            {% endif %}
+            <div class="phone">Telephone: {{ i.phone }}</div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Users</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .container {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px 40px;
+                text-align: center;
+                width: 300px;
+            }
+            h1 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 20px;
+            }
+            .user-list {
+                list-style: none;
+                padding: 0;
+            }
+            .user-list a {
+                text-decoration: none;
+                color: #007bff;
+                font-weight: bold;
+                display: block;
+                padding: 10px;
+                border-radius: 4px;
+                margin: 5px 0;
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .user-list a:hover {
+                background-color: #007bff;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            {% if user.is_authenticated %}
+            <a style="text-decoration: none; color: grey;" href="{% url 'logout' %}">logout</a> <br> <hr>
+            {% else %}
+            <a style="text-decoration: none; color: grey;" href="{% url 'register' %}">Register</a> <br> <hr>
+            <a style="text-decoration: none; color: rgb(127, 104, 104);" href="{% url 'login' %}">Login</a> <br> <hr>
+            {% endif %}
+            <!-- <h1>Our Users</h1> -->
+            <ul class="user-list">
+                    <li><a href="{% url 'userpage' user.username %}">{{ user.username }}</a></li>
+            </ul>
+        </div>
+        <script>
+            document.querySelectorAll('.user-list a').forEach(link => {
+                link.addEventListener('click', () => {
+                    alert(`Navigating to ${link.textContent}'s profile!`);
+                });
+            });
+        </script>
+    </body>
+    </html>

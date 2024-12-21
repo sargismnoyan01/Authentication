@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.18.6/umd/index.min.js"></script>
+</head>
+<body>
+    <h1>QR Code Scanner</h1>
+    <video id="video" style="width: 300px; height: 200px; border: 1px solid black;"></video>
+    <div id="result" style="margin-top: 20px; font-weight: bold; color: green;"></div>
+    <script>
+        const video = document.getElementById('video');
+        const result = document.getElementById('result');
+        const codeReader = new ZXing.BrowserQRCodeReader();
+
+        codeReader.decodeOnceFromVideoDevice(undefined, video)
+            .then(data => {
+                result.textContent = `QR Code Data: ${data.text}`;
+                fetch('/save-qr-data/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  
+                    },
+                    body: JSON.stringify({ qr_data: data.text })
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        console.log(data);
+                        alert(data.message || data.error);
+                    }
+                })
+                .catch(err => console.error('Error sending data to server:', err));
+            })
+            .catch(err => console.error("Error:", err));
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>
