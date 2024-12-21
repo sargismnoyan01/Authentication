@@ -51,8 +51,8 @@ This repository provides an authentication system where users can log in using e
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/yourrepository.git
-   cd yourrepository
+   git clone https://github.com/sargismnoyan01/Authentication.git/
+   cd Authentication
    ```
 
 2. Set up a virtual environment:
@@ -65,24 +65,23 @@ This repository provides an authentication system where users can log in using e
    ```bash
    pip install -r requirements.txt
    ```
+4. Install dependencies:
+   ```bash
+   enter your gmail infos in settings.py
+   ```
 
-4. Run migrations:
+5. Run migrations:
    ```bash
    python manage.py migrate
    ```
 
-5. Start the development server:
+6. Start the development server:
    ```bash
    python manage.py runserver
    ```
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
 
 ## Contributing
 
@@ -92,5 +91,5 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## Contact
 
-For questions or support, please reach out to [your-email@example.com](mailto:your-email@example.com).
+For questions or support, please reach out to [mnoyansargis@gmail.com](mnoyansargis@gmail.com).
 
